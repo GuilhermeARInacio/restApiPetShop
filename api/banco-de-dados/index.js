@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const config = requere('config')
+const config = require('config')
 
 const instancia = new Sequelize(
     config.get('mysql.banco-de-dados'),
