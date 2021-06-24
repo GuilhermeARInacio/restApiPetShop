@@ -1,7 +1,7 @@
 const ValorNaoSuportado = require('./erros/ValorNaoSuportado')
 const jsontoxml = require('jsontoxml')
 
-class Serealizador {
+class Serializador {
     json (dados) {
         JSON.stringify(dados)
     }
@@ -53,18 +53,31 @@ class Serealizador {
     
 }
 
-class SerealizadorFornecedor extends Serealizador {
+class SerializadorFornecedor extends Serializador {
     constructor(contentType, camposExtras) {
         super()
         this.contentType = contentType
-        const camposPublicos = ['id', 'empresa', 'categoria'].concat(camposExtras || [])
+        const camposPublicos = ['id', 'categoria'].concat(camposExtras || [])
         this.tagSingular = 'fornecedor'
         this.tagPlural = 'fornecedores'
     }
     
 }
 
-class SerealizadorErro extends Serealizador {
+class SerializadorProduto extends Serializador {
+    constructor (contentType, camposExtras) {
+        super()
+        this.contentType = contentType
+        this.camposPublicos = [
+            'id',
+            'titulo'
+        ].concat(camposExtras || [])
+        this.tagSingular = 'produto'
+        this.tagPlural = 'produtos'
+    }
+}
+
+class SerializadorErro extends Serializador {
     constructor (contentType, camposExtras) {
         super()
         this.contentType = contentType
@@ -78,8 +91,11 @@ class SerealizadorErro extends Serealizador {
 }
 
 module.exports = { 
-    Serealizador: Serealizador,
-    SerealizadorFornecedor : SerealizadorFornecedor,
-    SerealizadorErro : SerealizadorErro,
+    Serializador: Serializador,
+    SerializadorFornecedor : SerializadorFornecedor,
+    SerializadorErro : SerializadorErro,
+    SerializadorProduto : SerializadorProduto,
     fomatosAceitos: ['application/json', 'application/xml']
 }
+
+ 
